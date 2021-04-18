@@ -8,16 +8,25 @@ $(document).ready(function () {
     $("#cardForm").on("submit", drawCard);
 });
 
+let counter = 0;
+
 function countClick(event) {
     event.preventDefault();
 
     // Increment a variable that tracks the
     // number of button clicks
+    counter++
 
     // Print the current number of clicks to the
     // <p> with ID "clickCountOutput"
+$("p#clickCountOutput").text(counter);
 
     // When the count gets to 10, reset it to 0
+
+    if(counter === 10)
+    {
+        counter = 0;
+    }
 
 
 }
@@ -28,12 +37,23 @@ function checkAge(event) {
 
     // Get the user's birth year from the text
     // box with ID of "birthYear"
+    let birthYear = parseInt($("input#birthYear").val());
+
+    let age = 2021 - birthYear;
 
     // If they are currently under 18, print "Child"
     // to the <p> with ID of "birthYearOutput"
 
     // If they are 18 or over, print "Adult" instead
 
+    if(age <= 17)
+    {
+        $("p#birthYearOutput").text("Child");
+    }
+    else
+    {
+        $("p#birthYearOutput").text("Adult");
+    }
 }
 
 function calcSalesTax(event) {
@@ -41,16 +61,42 @@ function calcSalesTax(event) {
 
     // Get the purchase amount from the text
     // box with ID of "purchaseAmount"
+    let amount = parseFloat($("input#purchaseAmount").val());
 
     // Get the state from the text box with ID "state"
+    let state = $("input#state").val();
+
 
     // Tax rates are: WI 5%, IL 8%, MN 7.5%, MI 5.5%
-
     // Calculate the sales tax amount and print to
     // the <p> with ID of "salesTaxOutput"
 
-    // If the user enters a state not listed above,
+    if(state === "WI")
+    {
+        let tax = 0.05 * amount;
+        $("p#salesTaxOutput").text(tax);
+    }
+    else if(state === "IL")
+    {
+        let tax = 0.08 * amount;
+        $("p#salesTaxOutput").text(tax);
+    }
+    else if (state === "MN")
+    {
+        let tax = 0.075 * amount;
+        $("p#salesTaxOutput").text(tax);
+    }
+    else if (state === "MI")
+    {
+        let tax = 0.055 * amount;
+        $("p#salesTaxOutput").text(tax);
+    }
+        // If the user enters a state not listed above,
     // print "Error" instead
+    else
+    {
+        $("p#salesTaxOutput").text("Error");
+    }
 
 
 }
@@ -60,10 +106,22 @@ function recommendFood(event) {
 
     // Get the cat's age from the text box with
     // ID of "catAge"
+    let catAge = $("input#catAge").val();
 
     // Cats under 2 get "kitten chow", between 2 and 10
     // get "adult chow", and over 10 get "senior chow"
-
+    if(catAge < 2)
+    {
+        $("p#catAgeOutput").text("Kitten chow");
+    }
+    else if(catAge < 10)
+    {
+        $("p#catAgeOutput").text("Adult chow");
+    }
+    else
+    {
+        $("p#catAgeOutput").text("Senior chow");
+    }
     // Print the food recommendation to the <p> with
     // ID of "catAgeOutput"
 
@@ -82,7 +140,7 @@ function drawCard(event) {
     // Declare a variable to hold the description
     // of the card, for example "King of Spades"
     // or "2 of Hearts"
-    let description;
+    let description = faceValue + " of " + suit;
 
     // For face values 2 - 10, you can just print the number.
     // Face value 1 is "Ace", 11 is "Jack", 12 is "Queen",
@@ -94,5 +152,5 @@ function drawCard(event) {
     // Print the card's description to the <p> with
     // ID of "drawCardOutput"
 
-
+    $("p#drawCardOutput").text(description);
 }
